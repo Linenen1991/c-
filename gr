@@ -9,12 +9,12 @@ string=$1
 arg1="${string/%\\/\\\\}"
 string=$2
 arg2="${string/%\\/\\\\}"
-git grep -iP --files-with-matches "$arg2" | xargs.exe -r git grep -iP --files-with-matches "$arg2" | xargs.exe -r git grep -iP -e "$arg1" --or -e "$arg2"
+git grep -iP --files-with-matches "$arg1" | xargs.exe -r git grep -iP --files-with-matches "$arg2" | xargs.exe -r git grep -iP -e "$arg1" --or -e "$arg2"
 exit;
 
-string="${string%\}\"
-arg1="${string/\\/\\\\}";=
+# "using\sSystem" -> "using\\sSystem"
+string=$1
+arg1="${string/\\/\\\\}";
 string=$2
 arg2="${string/\\/\\\\}"
-# "using\sSystem" -> "using\\System"
 git grep -iP --files-with-matches "$arg1" | xargs.exe git grep -iP --files-with-matches "$arg2" | xargs.exe git grep -iP -e "$arg1" --or -e "$arg2"
