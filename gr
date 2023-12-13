@@ -1,0 +1,13 @@
+#!/usr/bin/sh
+# please use single quote e.g. 'Pattern'
+# If need backslash in pattern, use backslash to escape. 'Color\' -> 'Color\\'
+git grep -iP --files-with-matches "$1" | xargs.exe git grep -iP --files-with-matches "$2" | xargs.exe git grep -iP -e "$2" --or -e "$1"
+exit;
+string=$1
+arg1="${string/\\/\\\\}"
+string=$2
+arg2="${string/\\/\\\\}"
+echo $arg1
+echo $arg2
+# "using\sSystem" -> "using\\System"
+git grep -iP --files-with-matches "$arg1" | xargs.exe git grep -iP --files-with-matches "$arg2" | xargs.exe git grep -iP -e "$arg1" --or -e "$arg2"
