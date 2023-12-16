@@ -6,9 +6,9 @@ space=' '
 
 # In command line, "git grep "Color\\\\"" for search "Color\"
 for i; do
-    arg1="${i/%\\/\\\\\\\\}"
-    fcmd=$cmd$space'"'$arg1'" | xargs.exe -r '$fcmd
-    gcmd=$gcmd" -e \""$arg1"\" --or"
+    arg="${i//\\/\\\\}"
+    fcmd=$cmd$space'"'$arg'" | xargs.exe -r '$fcmd
+    gcmd=$gcmd" -e \""$arg"\" --or"
 done
 # fcmd=${fcmd/% | xargs.exe -r /}
 gcmd=${gcmd/%--or/}
