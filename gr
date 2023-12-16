@@ -1,4 +1,24 @@
 #!/usr/bin/sh
+cmd='git grep --files-with-matches'
+gcmd='git grep'
+space=' '
+
+# In command line, "git grep "Color\\\\"" for search "Color\"
+for i; do
+    string=$i
+    arg1="${string/%\\/\\\\\\\\}"
+    arg=$cmd$space'"'$arg1'" | xargs.exe -r '$arg
+    gcmd=$gcmd" -e \""$arg1"\" --or"
+done
+arg=${arg/% | xargs.exe -r /}
+gcmd=${gcmd/%--or/}
+# printf "arg %s\n" "$arg"
+# printf "%s\n" "$gcmd"
+
+bash -c "$arg | xargs.exe -r $gcmd"
+exit;
+
+#
 # please use single quote e.g. 'Pattern'
 # If need backslash in pattern, use backslash to escape. 'Color\' -> 'Color\\'
 #git grep -iP --files-with-matches "$1" | xargs.exe git grep -iP --files-with-matches "$2" | xargs.exe git grep -iP -e "$2" --or -e "$1"
