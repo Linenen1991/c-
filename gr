@@ -1,21 +1,21 @@
 #!/usr/bin/sh
-cmd='git grep --files-with-matches'
-gcmd='git grep'
+cmd='git grep -lP '
+fcmd=''
+gcmd='git grep -P -A 3 -B 3'
 space=' '
 
 # In command line, "git grep "Color\\\\"" for search "Color\"
 for i; do
-    string=$i
-    arg1="${string/%\\/\\\\\\\\}"
-    arg=$cmd$space'"'$arg1'" | xargs.exe -r '$arg
+    arg1="${i/%\\/\\\\\\\\}"
+    fcmd=$cmd$space'"'$arg1'" | xargs.exe -r '$fcmd
     gcmd=$gcmd" -e \""$arg1"\" --or"
 done
-arg=${arg/% | xargs.exe -r /}
+# fcmd=${fcmd/% | xargs.exe -r /}
 gcmd=${gcmd/%--or/}
-# printf "arg %s\n" "$arg"
+# printf "%s\n" "$fcmd"
 # printf "%s\n" "$gcmd"
 
-bash -c "$arg | xargs.exe -r $gcmd"
+bash -c "$fcmd $gcmd"
 exit;
 
 #
