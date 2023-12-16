@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+RG_PREFIX="git grep --color=always "
+INITIAL_QUERY="${*:-}"
+   zf --ansi \
+      --disabled --query "$INITIAL_QUERY" \
+      --bind "start:reload:$RG_PREFIX {q}" \
+      --bind "change:reload:sleep 0.5; $RG_PREFIX {q} || true" | awk -F: '{ print $1 }'
+

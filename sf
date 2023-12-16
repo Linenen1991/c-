@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Get sln or csproj containing the filename by following command
+# git ls-files | thisScript
+zf --color=bg+:#FF0000,gutter:-1 | awk -F: '{print $1}' | xargs.exe basename.exe -a | xargs.exe -r -I {} git grep {} -- "*.sln" "*.csproj" | awk -F: '{print $1}' 
