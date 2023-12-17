@@ -4,11 +4,11 @@ fcmd=''
 gcmd='git grep -P -A 3 -B 3'
 space=' '
 
-# In command line
-# "git grep "Color\\\\"" for search "Color\"
-# "git grep "\\\vNew" or "\\\\vNew" for search "\vNew"
-# "git grep -P "Color\\\\\w" for search "Color\A"
-# "git grep -P '\\v'" for search "\v", but '\\\v' can't search this.
+# In grp (git grep)
+# grp "r\\\k" and grp "r\\\\k" can search "r\k"
+# grp -P "r\\\\\w" and grp "r\\\\\\k" can search "r\[any charater]"
+# grp -P "Color\\\\\\s" and grp -P "Color\\\\\s" can search "Color\[carriage-return character]"
+# Only grp -P "Color\\\\" can search "Color\"
 for i; do
     # arg="${i//\/\\}"
     arg=$(printf "%q" "$i")
