@@ -1,19 +1,24 @@
 #!/usr/bin/sh
-cmd='git grep -lP '
+cmd='git grep -lP'
 fcmd=''
 gcmd='git grep -P -A 3 -B 3'
 space=' '
 
-# In command line, "git grep "Color\\\\"" for search "Color\"
+# In command line
+# "git grep "Color\\\\"" for search "Color\"
+# "git grep "\\\vNew" or "\\\\vNew" for search "\vNew"
+# "git grep -P "Color\\\\\w" for search "Color\A"
+# "git grep -P '\\v'" for search "\v", but '\\\v' can't search this.
 for i; do
-    arg="${i//\\/\\\\}"
+    # arg="${i//\/\\}"
+    arg=$(printf "%q" "$i")
     fcmd=$cmd$space'"'$arg'" | xargs.exe -r '$fcmd
     gcmd=$gcmd" -e \""$arg"\" --or"
 done
 # fcmd=${fcmd/% | xargs.exe -r /}
 gcmd=${gcmd/%--or/}
-# printf "%s\n" "$fcmd"
-# printf "%s\n" "$gcmd"
+printf "%s\n" "$fcmd"
+printf "%s\n" "$gcmd"
 
 bash -c "$fcmd $gcmd"
 exit;
